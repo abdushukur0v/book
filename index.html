@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Книжный чайник</title>
+  <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header>
+    <h1>Книжный чайник</h1>
+    <p>Тепло, книги и аромат свежего кофе</p>
+  </header>
+  <nav>
+    <a href="#menu">Меню</a>
+    <a href="#books">Книги</a>
+    <a href="#booking">Бронирование</a>
+    <a href="#events">События</a>
+    <a href="#location">Местоположение</a>
+  </nav>
+  <div class="main-content">
+    <div class="sidebar">
+      <h2>Меню</h2>
+      <button class="category-btn active" data-category="coffee">☕ Кофе</button>
+      <button class="category-btn" data-category="tea">🍵 Чай</button>
+      <button class="category-btn" data-category="dessert">🍰 Десерты</button>
+      <button class="category-btn" data-category="drinks">🥤 Напитки</button>
+    </div>
+    <div class="content">
+      <div class="menu-grid" id="menuItems"></div>
+    </div>
+  </div>
+
+  <!-- Секция с книгами -->
+  <section id="books">
+    <h2>Библиотека</h2>
+    <div class="book-catalog">
+      <div class="book-card">
+        <img src="иллюзия правды.jpg" alt="Иллюзия правды">
+        <strong>«Иллюзия правды»</strong><br/>
+        Ана Шерри / Роман
+      </div>
+      <div class="book-card">
+        <img src="Убить пересмешника.jpeg" alt="Убить пересмешника">
+        <strong>«Убить пересмешника»</strong><br/>
+        Харпер Ли / Классика
+      </div>
+      <div class="book-card">
+        <img src="сегун1.jpg" alt="Сегун">
+        <strong>«Сегун»</strong><br/>
+        Джеймс Клавелл / Современная проза
+      </div>
+    </div>
+    <br/>
+    <button class="reserve-btn" onclick="openModal()">📚 Бронировать книгу</button>
+  </section>
+
+  <!-- Модальное окно бронирования книги -->
+  <div class="modal" id="bookModal">
+    <div class="modal-content">
+      <span class="close-btn" onclick="closeModal()">&times;</span>
+      <h2>Забронировать книгу</h2>
+      <form onsubmit="submitReservation(event)">
+        <label for="book">Книга</label>
+        <select id="book" required>
+          <option value="">Выберите книгу</option>
+          <option>Мастер и Маргарита</option>
+          <option>Убить пересмешника</option>
+          <option>Сегун</option>
+        </select>
+        <label for="name">Ваше имя</label>
+        <input type="text" id="name" required placeholder="Имя" />
+        <label for="date">Дата</label>
+        <input type="date" id="date" required />
+        <button type="submit">Забронировать</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Секция бронирования столика -->
+  <section id="booking">
+    <h2>Бронирование столика</h2>
+    <form class="booking-form">
+      <input type="text" placeholder="Ваше имя" required>
+      <input type="tel" placeholder="Телефон" required>
+      <input type="datetime-local" required>
+      <select>
+        <option>1 человек</option>
+        <option>2 человека</option>
+        <option>3-4 человека</option>
+        <option>5 и более</option>
+      </select>
+      <textarea placeholder="Комментарии"></textarea>
+      <button type="submit">Забронировать</button>
+    </form>
+  </section>
+
+  <!-- Секция событий -->
+  <section id="events">
+    <h2>События и книжные клубы</h2>
+    <div class="events">
+      <div class="event-card">
+        <img src="Книжный клуб.jpeg" alt="Книжный клуб">
+        <strong>Книжный клуб: Фантастика</strong><br/>
+        Каждое воскресенье в 17:00
+      </div>
+      <div class="event-card">
+        <img src="вечер.jpeg" alt="Поэтический вечер">
+        <strong>Поэтический вечер</strong><br/>
+        Последняя пятница месяца
+      </div>
+    </div>
+  </section>
+
+  <!-- Секция местоположения -->
+  <section id="location">
+    <h2>Где мы находимся</h2>
+    <div class="map-container">
+      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2924.953394246731!2d74.60149721544495!3d42.87000497915533!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x389eb7d019a553e1%3A0x690e187e093145c!2z0JrQvtGA0L_Rg9GBIC0g0KDQsNCy0LvQtdC60YHQutC-0LPQvi3QkNC70LXQutGB0YLRjA!5e0!3m2!1sru!2skg!4v1713455998742" allowfullscreen="" loading="lazy"></iframe>
+      <a class="directions-btn" href="https://maps.google.com?q=кофейня" target="_blank">📍 Как добраться</a>
+    </div>
+  </section>
+
+  <!-- Модальное окно оформления заказа -->
+  <div class="modal" id="checkoutModal">
+    <div class="modal-content">
+      <span class="close-btn" onclick="closeCheckout()">&times;</span>
+      <h2>🛒 Ваш заказ</h2>
+      <div id="orderSummary" style="margin-bottom: 15px; line-height: 1.6;"></div>
+      <label for="payment">Способ оплаты:</label>
+      <select id="payment" required>
+        <option value="">Выберите</option>
+        <option value="cash">Наличные</option>
+        <option value="card">Карта</option>
+        <option value="mbank">МБанк (онлайн)</option>
+      </select>
+      <button class="pay-btn" onclick="confirmOrder()">💳 Оплатить</button>
+    </div>
+  </div>
+
+  <script>
+    // Данные меню и управление корзиной
+    const menuData = {
+      coffee: [
+        { name: "Эспрессо", price: 120, img: "эспрессо.jpeg" },
+        { name: "Капучино", price: 150, img: "капучино.jpeg" },
+        { name: "Латте", price: 160, img: "латте.jpeg" }
+      ],
+      tea: [
+        { name: "Чёрный чай", price: 90, img: "чай.jpeg" },
+        { name: "Зелёный чай", price: 100, img: "чай1.jpeg" }
+      ],
+      dessert: [
+        { name: "Чизкейк", price: 220, img: "чизкейк.jpeg" },
+        { name: "Круассан", price: 110, img: "круассан.jpeg" }
+      ],
+      drinks: [
+        { name: "Лимонад", price: 140, img: "лимонад.jpeg" },
+        { name: "Молочный коктейль", price: 180, img: "коктейл.jpeg" }
+      ]
+    };
+
+    const menuItemsContainer = document.getElementById("menuItems");
+    const buttons = document.querySelectorAll(".category-btn");
+    const cart = {};
+
+    function renderMenu(category) {
+      menuItemsContainer.innerHTML = "";
+      menuData[category].forEach(item => {
+        const card = document.createElement("div");
+        card.className = "item-card";
+        card.innerHTML = `
+          <img src="${item.img}" alt="${item.name}">
+          <h3>${item.name}</h3>
+          <p>${item.price} сом</p>
+          <button class="order-btn" onclick="addToCart('${item.name}', ${item.price})">Добавить в заказ</button>
+        `;
+        menuItemsContainer.appendChild(card);
+      });
+      renderCheckoutButton();
+    }
+
+    function addToCart(itemName, price) {
+      if (cart[itemName]) {
+        cart[itemName].quantity += 1;
+      } else {
+        cart[itemName] = { price: price, quantity: 1 };
+      }
+      renderCheckoutButton();
+    }
+
+    function renderCheckoutButton() {
+      let existingBtn = document.getElementById("checkout-btn");
+      if (!existingBtn) {
+        const btn = document.createElement("button");
+        btn.id = "checkout-btn";
+        btn.innerText = "🛒 Оформить заказ";
+        btn.style = `
+          margin-top: 30px;
+          padding: 12px 20px;
+          font-size: 16px;
+          background: #ffcc00;
+          color: #0b1c2c;
+          border: none;
+          border-radius: 8px;
+          cursor: pointer;
+          display: block;
+        `;
+        btn.onclick = showCart;
+        document.querySelector(".content").appendChild(btn);
+      }
+    }
+
+    function showCart() {
+      const modal = document.getElementById("checkoutModal");
+      const summaryDiv = document.getElementById("orderSummary");
+      summaryDiv.innerHTML = "";
+      let total = 0;
+      for (let item in cart) {
+        const { price, quantity } = cart[item];
+        const line = document.createElement("div");
+        line.textContent = `${item} × ${quantity} = ${price * quantity} сом`;
+        summaryDiv.appendChild(line);
+        total += price * quantity;
+      }
+      const totalLine = document.createElement("strong");
+      totalLine.textContent = `Итого: ${total} сом`;
+      summaryDiv.appendChild(totalLine);
+      modal.style.display = "flex";
+    }
+
+    function closeCheckout() {
+      document.getElementById("checkoutModal").style.display = "none";
+    }
+
+    function confirmOrder() {
+      const payment = document.getElementById("payment").value;
+      if (!payment) {
+        alert("Пожалуйста, выберите способ оплаты.");
+        return;
+      }
+      if (Object.keys(cart).length === 0) {
+        alert("Корзина пуста.");
+        return;
+      }
+      alert("✅ Заказ успешно оплачен!\nСпасибо за покупку. Способ оплаты: " +
+            (payment === "cash" ? "Наличные" : payment === "card" ? "Карта" : "МБанк (онлайн)"));
+      // Очистка корзины
+      for (let key in cart) {
+        delete cart[key];
+      }
+      closeCheckout();
+      document.getElementById("orderSummary").innerHTML = "";
+      document.getElementById("payment").value = "";
+    }
+
+    // Обработчик для кнопок категорий
+    buttons.forEach(btn => {
+      btn.addEventListener("click", () => {
+        document.querySelector(".category-btn.active")?.classList.remove("active");
+        btn.classList.add("active");
+        renderMenu(btn.dataset.category);
+      });
+    });
+
+    // Изначально показываем меню кофе
+    renderMenu("coffee");
+
+    // Закрытие модальных окон при клике вне их содержимого
+    window.onclick = function(event) {
+      const checkoutModal = document.getElementById("checkoutModal");
+      if (event.target === checkoutModal) {
+        closeCheckout();
+      }
+      const bookModal = document.getElementById("bookModal");
+      if (event.target === bookModal) {
+        closeModal();
+      }
+    };
+
+    // Функции для модального окна бронирования книги
+    function openModal() {
+      document.getElementById("bookModal").style.display = "flex";
+    }
+    function closeModal() {
+      document.getElementById("bookModal").style.display = "none";
+    }
+    function submitReservation(event) {
+      event.preventDefault();
+      const book = document.getElementById("book").value;
+      const name = document.getElementById("name").value;
+      const date = document.getElementById("date").value;
+      alert(`📖 ${name}, вы забронировали книгу «${book}» на ${date}`);
+      closeModal();
+    }
+  </script>
+  <script>
+    // Анимация карточек при скролле
+    const cards = document.querySelectorAll('.item-card, .book-card, .event-card');
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = 1;
+          entry.target.style.transform = 'translateY(0)';
+        }
+      });
+    }, { threshold: 0.1 });
+    cards.forEach(card => {
+      card.style.opacity = 0;
+      card.style.transform = 'translateY(20px)';
+      card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+      observer.observe(card);
+    });
+  </script>
+</body>
+</html>
